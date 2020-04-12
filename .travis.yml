@@ -19,3 +19,8 @@ before_install:
   - gcloud config set project udemy-multi-k8s-274006
   - gcloud config set compute/zone us-east1-b
   - gcloud container clusters get-credentials multi-cluster
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+  - docker build -t dhillondeep/react-test -f ./client/Dockerfile.dev ./client
+
+script:
+  - docker run dhillondeep/react-test npm test -- --coverage
